@@ -1,5 +1,6 @@
 package com.adisalagic.hackathon;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -23,21 +24,21 @@ public class Microservice extends Fragment {
 	/**
 	 * State - Ready to use
 	 */
-	public static final int COO = 412;
+	static final int COO = 412;
 	/**
 	 * State - Currently as idea
 	 */
-	public static final int IDE = 142;
+	static final int IDE = 142;
 
 	/**
 	 * State - In development
 	 */
-	public static final int IDV = 705;
+	static final int IDV = 705;
 
 	/**
 	 * State - Currently in testing
 	 */
-	public static final int DEB = 854;
+	static final int DEB = 854;
 
 	int              type;
 	String           name;
@@ -72,7 +73,9 @@ public class Microservice extends Fragment {
 		rootView.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-
+				Intent intent = new Intent();
+				intent.setClass(v.getContext(), ViewMicroservice.class);
+				startActivity(intent);
 			}
 		});
 		switch (type) {

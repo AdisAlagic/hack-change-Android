@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 		for (int i = 0; i < 10; i++) {
 			fragmentTransaction.add(linearLayout.getId(), new Microservice("Name of microservice",
 					"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. " +
-							"Aenean massa. Cum sociis natoque penatibus et", Microservice.COO));
+							"Aenean massa. Cum sociis natoque penatibus et", Microservice.DEB));
 		}
 		fragmentTransaction.commit();
 	}
