@@ -1,26 +1,62 @@
 package com.adisalagic.hackathon;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
 public class Microservice extends Fragment {
+	/**
+	 * State - Ready to use
+	 */
+	public static final int COO = 412;
+	/**
+	 * State - Currently as idea
+	 */
+	public static final int IDE = 142;
 
-	String name;
-	String description;
+	/**
+	 * State - In development
+	 */
+	public static final int IDV = 705;
 
-	TextView mName, mDescription;
+	/**
+	 * State - Currently in testing
+	 */
+	public static final int DEB = 854;
 
-	Microservice(String name, String description) {
+	int              type;
+	String           name;
+	String           description;
+	ConstraintLayout layout;
+	TextView         mName, mDescription;
+	ImageView circle;
+
+
+	@Target(value = ElementType.PARAMETER)
+	@IntDef({Microservice.COO, Microservice.IDE, Microservice.DEB, Microservice.IDV})
+	@Retention(value = RetentionPolicy.CLASS)
+	@interface SericeType {
+	}
+
+	Microservice(String name, String description, @SericeType int type) {
 		this.name = name;
 		this.description = description;
+		this.type = type;
 	}
 
 	@Nullable
@@ -30,7 +66,29 @@ public class Microservice extends Fragment {
 		mName = rootView.findViewById(R.id.name);
 		mDescription = rootView.findViewById(R.id.description);
 		mName.setText(name);
+		circle = rootView.findViewById(R.id.circle);
 		mDescription.setText(description);
+		layout = rootView.findViewById(R.id.layout);
+		rootView.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+
+			}
+		});
+		switch (type) {
+			case Microservice.IDE:
+				circle.setColorFilter(Color.CYAN);
+				break;
+			case Microservice.COO:
+				circle.setColorFilter(Color.WHITE);
+				break;
+			case Microservice.DEB:
+				circle.setColorFilter(Color.YELLOW);
+				break;
+			case Microservice.IDV:
+				circle.setColorFilter(Color.GREEN);
+				break;
+		}
 		return rootView;
 	}
 }
