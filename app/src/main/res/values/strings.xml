@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">hackathon</string>
+    <string name="introduction">Ищите микросервисы легко</string>
+    <string name="login">Логин</string>
+    <string name="password">Пароль</string>
+    <string name="action_login">Войти</string>
+    <string name="action_skip_login">Хочу просто посмотреть→</string>
+    <string name="text_example">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et</string>
 </resources>
