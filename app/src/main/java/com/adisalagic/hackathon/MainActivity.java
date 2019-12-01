@@ -29,16 +29,11 @@ public class MainActivity extends AppCompatActivity {
 	private void check() {
 		GetAmountService task = new GetAmountService();
 		task.execute();
-		if (task.res > 0){
-			refreshServices(task);
-		}else {
-			check();
-		}
+		refreshServices(task);
 	}
 
 	private void refreshServices(GetAmountService task) {
 
-		task.execute();
 		FragmentManager     fragmentManager     = getSupportFragmentManager();
 		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 		for (int i = 0; i < fragmentManager.getFragments().size(); i++) {
