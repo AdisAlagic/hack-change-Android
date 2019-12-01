@@ -62,6 +62,13 @@ public class Microservice extends Fragment {
 	Microservice(String name, String description, @SericeType int type) {
 		this.name = name;
 		this.description = description;
+		if (this.description.length() > 50){
+			for (int i = 50; i < this.description.length(); i++){
+				this.description.getChars(0, 50, this.description.toCharArray(), 0);
+			}
+			this.description += "...";
+			this.description = this.description.replace("\\r\\n", "\r\n");
+		}
 		this.type = type;
 	}
 
@@ -81,7 +88,7 @@ public class Microservice extends Fragment {
 				Intent intent = new Intent();
 				intent.setClass(v.getContext(), ViewMicroservice.class);
 				intent.putExtra("name", name);
-				intent.putExtra("description", description);
+				intent.putExtra("description", description + "\\r\\n\\r\\nМногие из наиболее активно развивающихся компаний в мире, например Lyft, Airbnb и Redfin, а также крупные корпорации, такие как Samsung, Toyota и Capital One, используют масштабируемый и высокопроизводительный сервис DynamoDB для выполнения критически важных рабочих нагрузок.\\r\\n\\r\\nСотни тысяч клиентов AWS выбрали DynamoDB в качестве базы данных пар «ключ‑значение» и документов для мобильных, игровых, рекламных, интернет‑приложений, приложений Интернета вещей и прочих приложений, которым необходим доступ к данным с минимальной задержкой независимо от масштаба. Создайте таблицу для приложения, а DynamoDB обеспечит все остальное.\\r\\n\\r\\n## Преимущества\\r\\n\\r\\n* Производительность при любом масштабе\\r\\n* Без управления серверами\\r\\n* Готовность к использованию в корпоративной среде\", \"about_html\": \"<h2>Описание</h2>\\n<p>Amazon DynamoDB – это база данных пар «ключ‑значение» и документов, которая обеспечивает з…</p>");
 				intent.putExtra("status", type);
 				startActivity(intent);
 			}

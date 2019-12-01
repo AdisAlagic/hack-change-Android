@@ -68,7 +68,7 @@ public class ViewMicroservice extends AppCompatActivity {
 		description = renderer.render(desc);
 		Spanned spanned = Html.fromHtml(description);
 		mDescription.setText(spanned);
-		Api       api = new Api();
+		Api api = new Api();
 
 	}
 

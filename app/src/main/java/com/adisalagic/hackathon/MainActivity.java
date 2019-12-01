@@ -39,21 +39,29 @@ public class MainActivity extends AppCompatActivity {
 		for (int i = 0; i < fragmentManager.getFragments().size(); i++) {
 			fragmentTransaction.remove(fragmentManager.getFragments().get(i));
 		}
-		Api api = new Api();
-		Log.i("ASYNC", "The final size is " + size);
-		ArrayList<Api.ResultSet> resultSets = new ArrayList<>();
-		for (int i = 2; i < size + 2; i++) {
-			GetResult result = new GetResult();
-			result.execute(i);
-			resultSets.add(result.getResultSet());
+		for (int i = 0; i < 10; i++) {
+			fragmentTransaction.add(linearLayout.getId(), new Microservice("Amazon DynamoDB", "Amazon DynamoDB – это база данных пар «ключ‑значение» " +
+					"и документов, которая обеспечивает задержку менее 10 миллисекунд при работе в любом масштабе. Это надежная полностью управляемая " +
+					"база данных для приложений в масштабе всего Интернета, которая работает в нескольких регионах с несколькими ведущими серверами и обладает " +
+					"встроенными средствами обеспечения безопасности, резервного копирования и " +
+					"восстановления, а также кэширования в памяти. DynamoDB может обрабатывать более 10 трлн запросов в день и справляться с " +
+					"пиковыми нагрузками, превышающими 20 млн запросов в секунду.", Microservice.IDE));
 		}
-
-		for (int i = 0; i < resultSets.size(); i++) {
-			Api.ResultSet resultSet = resultSets.get(i);
-			resultSet.description = resultSet.description.split("\n")[1];
-			Microservice microservice = new Microservice(resultSet.name, resultSet.description, resultSet.getStatusAsInt());
-			fragmentTransaction.add(linearLayout.getId(), microservice);
-		}
+//		Api api = new Api();
+//		Log.i("ASYNC", "The final size is " + size);
+//		ArrayList<Api.ResultSet> resultSets = new ArrayList<>();
+//		for (int i = 2; i < size + 2; i++) {
+//			GetResult result = new GetResult();
+//			result.execute(i);
+//			resultSets.add(result.getResultSet());
+//		}
+//
+//		for (int i = 0; i < resultSets.size(); i++) {
+//			Api.ResultSet resultSet = resultSets.get(i);
+//			resultSet.description = resultSet.description.split("\n")[1];
+//			Microservice microservice = new Microservice(resultSet.name, resultSet.description, resultSet.getStatusAsInt());
+//			fragmentTransaction.add(linearLayout.getId(), microservice);
+//		}
 		fragmentTransaction.commit();
 	}
 
