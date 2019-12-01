@@ -33,10 +33,10 @@ public class GetAmountService extends AsyncTask<String, Void, Integer> {
 			connection.setConnectTimeout(10000);
 			connection.connect();
 			BufferedReader br   = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-			StringBuilder  sb   = new StringBuilder();
-			String         line = "";
-			while ((line = br.readLine()) != null) {
-				sb.append(line).append('\n');
+				StringBuilder  sb   = new StringBuilder();
+				String         line = "";
+				while ((line = br.readLine()) != null) {
+					sb.append(line).append('\n');
 			}
 			br.close();
 

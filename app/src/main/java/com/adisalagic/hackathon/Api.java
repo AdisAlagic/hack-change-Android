@@ -13,6 +13,13 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.GET;
+import retrofit2.http.Path;
 
 public class Api {
 	public static final String API_URL = "http://10.5.12.151:64233/";
@@ -58,93 +65,42 @@ public class Api {
 		}
 	}
 
-
-
-
-
-	public int getAmountOfServices() {
-		readyForUse = false;
-		AsyncTask.execute(new Runnable() {
-			@Override
-			public void run() {
-				HttpURLConnection connection;
-				try {
-					Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
-					URL reqUrl = new URL(API_URL + "api/get-service-count/");
-					connection = (HttpURLConnection) reqUrl.openConnection();
-					connection.setRequestMethod("GET");
-					connection.setConnectTimeout(100);
-					connection.connect();
-					BufferedReader br   = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-					StringBuilder  sb   = new StringBuilder();
-					String         line = "";
-					while ((line = br.readLine()) != null) {
-						sb.append(line);
-					}
-					br.close();
-					size = Integer.parseInt(sb.toString());
-					readyForUse = true;
-					connection.disconnect();
-				} catch (Exception e) {
-					Log.e("NETWORK", e.toString());
-				}
-			}
-		});
-		return size;
+	private reOiLApi reOiLAPI;
+	public interface reOiLApi{
+		@GET(value = "/api/get-service/{id}")
+		Call<List<Request>> getData(@Path(value = "id") int id);
 	}
 
-
-	public ResultSet getResult(final int id) {
-		final ResultSet[] result = new ResultSet[1];
-		readyForUse = false;
-		AsyncTask.execute(new Runnable() {
-			@Override
-			public void run() {
-				ResultSet resultSet = null;
-
-				readyForUse = true;
-				result[0] = resultSet;
-			}
-		});
-		return result[0];
+	public interface reOiLApiCount{
+		@GET(value = "/api/get-service-count/")
+		Call<Integer> getCount();
 	}
 
-	public ArrayList<ResultSet> getResults(final int size) {
-		Log.i("ASYNC", "After");
-		final ArrayList<ResultSet> resultSets = new ArrayList<>();
-		Log.i("ASYNC", "Here!");
-		AsyncTask.execute(new Runnable() {
-			@Override
-			public void run() {
-				Gson              gson;
-				HttpURLConnection connection;
-				try {
-					Log.i("ASYNC", "SIZE " + size);
-					for (int i = 0; i < size; i++) {
-						URL reqUrl = new URL(API_URL + "api/get-service/" + i);
-						connection = (HttpURLConnection) reqUrl.openConnection();
-						connection.setRequestMethod("GET");
-						connection.connect();
-						BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-						StringBuilder  sb = new StringBuilder();
-						String         line;
-						if (br.ready()) {
-							while ((line = br.readLine()) != null) {
-								sb.append(line);
-							}
-						}
-						br.close();
-						Log.i("ASYNC", sb.toString());
-						gson = new Gson();
-						resultSets.add(gson.fromJson(sb.toString(), ResultSet.class));
-						connection.disconnect();
-					}
-				} catch (Exception e) {
-					Log.e("ASYNC", e.toString());
-				}
-			}
-		});
+	private reOiLApiCount reOiLAPICount;
+	public void GetCount(){
+		Retrofit retrofit = new Retrofit
+				.Builder()
+				.baseUrl("http://10.5.12.151:64233/")
+				.addConverterFactory(GsonConverterFactory.create())
+				.build();
+		reOiLAPICount = retrofit.create(reOiLApiCount.class);
+	}
 
-		return resultSets;
+	public reOiLApiCount getReOiLAPICount(){
+		return reOiLAPICount;
+	}
+
+	public void GetResultByID(){
+
+		Retrofit retrofit = new Retrofit
+				.Builder()
+				.baseUrl("http://10.5.12.151:64233/")
+				.addConverterFactory(GsonConverterFactory.create())
+				.build();
+		reOiLAPI = retrofit.create(reOiLApi.class);
+	}
+
+	public reOiLApi getAPI(){
+		return reOiLAPI;
 	}
 }
