@@ -40,6 +40,11 @@ public class Microservice extends Fragment {
 	 */
 	static final int DEB = 854;
 
+	/**
+	 * If nothing came, using this
+	 */
+	static final int ERR = 839;
+
 	int              type;
 	String           name;
 	String           description;
@@ -75,6 +80,9 @@ public class Microservice extends Fragment {
 			public void onClick(View v) {
 				Intent intent = new Intent();
 				intent.setClass(v.getContext(), ViewMicroservice.class);
+				intent.putExtra("name", name);
+				intent.putExtra("description", description);
+				intent.putExtra("status", type);
 				startActivity(intent);
 			}
 		});
@@ -90,6 +98,9 @@ public class Microservice extends Fragment {
 				break;
 			case Microservice.IDV:
 				circle.setColorFilter(Color.GREEN);
+				break;
+			case Microservice.ERR:
+				circle.setColorFilter(Color.RED);
 				break;
 		}
 		return rootView;
